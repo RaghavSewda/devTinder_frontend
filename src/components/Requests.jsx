@@ -1,41 +1,41 @@
 import axios from "axios";
+import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addConnections } from "../utils/connectionSlice";
+import { addRequests } from "../utils/requestSlice";
 
-const Connectinos = () => {
-  const connections = useSelector((store) => store.connections);
+const Requests = () => {
+  const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
-  const fetchConnections = async () => {
+
+  const fetchRequests = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/connections", {
+      const res = await axios.get(BASE_URL + "/user/requests/received", {
         withCredentials: true,
       });
-      // console.log(res);
-      dispatch(addConnections(res.data.data));
+
+      dispatch(addRequests(res.data.data));
     } catch (err) {
-      // Handling error case
+      // handling errors
     }
   };
 
   useEffect(() => {
-    fetchConnections();
+    fetchRequests();
   }, []);
+  if (!requests) return;
 
-  if (!connections) return;
-
-  if (connections.length === 0) return <h1>No Connections Found</h1>;
+  if (requests.length === 0) return <h1>No Requests Found</h1>;
   return (
     <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connections</h1>
-      {connections.map((connection) => {
+      <h1 className="text-bold text-white text-3xl">Requests</h1>
+      {requests.map((request) => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
-          connection;
+          request.fromUserId;
         return (
           <div
             key={_id}
-            className=" flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto"
+            className=" flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 w-2/3 mx-auto"
           >
             <div>
               <img
@@ -51,6 +51,10 @@ const Connectinos = () => {
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
             </div>
+            <div>
+              <button className="btn btn-success mx-2">Accept</button>
+              <button className="btn btn-error mx-2">Reject</button>
+            </div>
           </div>
         );
       })}
@@ -58,4 +62,4 @@ const Connectinos = () => {
   );
 };
 
-export default Connectinos;
+export default Requests;
