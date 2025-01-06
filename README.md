@@ -31,6 +31,8 @@
 - New Page - See all my Conenction REquests
 - Feature - Accept/Reject connection request
 - Send/Ignore the user card from the feed
+- Signup New User
+- E2E testing
 
 Body
 NavBar
