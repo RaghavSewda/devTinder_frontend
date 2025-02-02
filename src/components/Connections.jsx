@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
+import { Link } from "react-router-dom";
 
 const Connectinos = () => {
   const connections = useSelector((store) => store.connections);
@@ -16,6 +17,7 @@ const Connectinos = () => {
       dispatch(addConnections(res.data.data));
     } catch (err) {
       // Handling error case
+      console.log(err);
     }
   };
 
@@ -51,6 +53,9 @@ const Connectinos = () => {
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
             </div>
+            <Link to={"/chat/" + _id}>
+              <button className="btn btn-primary"> Chat</button>
+            </Link>
           </div>
         );
       })}

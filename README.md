@@ -86,3 +86,13 @@ Router=/profile => Profile
             proxy_set_header Host $host;
             proxy_cache_bypass $http_upgrade;
         }
+
+# Real Time Chat using Websocket(Socket.io)
+
+    - Build the UI for a chat window on /chat/:targetUserId
+    - Setup socket.io in backend
+    - npm i socket.io
+    - Setup frontend socket.io-client
+    - Initialise the chat
+    - createSocketConnection
+    - Listen to events
